@@ -228,3 +228,45 @@ The dataset was built through the following steps:
 - Map tiles — © CartoDB (Positron)
 
 > Any derived data or visualisations must carry the attribution: **"© OpenStreetMap contributors"**
+
+---
+
+## 🤖 Sign Description Generator (Page 2)
+
+A second Streamlit page (`pages/2_Sign_Description_Generator.py`) that uses a transformer-style approach to generate plain-English descriptions for every traffic sign node.
+
+### How to run
+Place `2_Sign_Description_Generator.py` inside a `pages/` folder next to `main.py`. Streamlit automatically adds it as a second page in the sidebar.
+
+```
+Traffic Assistant/
+├── main.py
+├── pages/
+│   └── 2_Sign_Description_Generator.py
+├── ireland_all_signs_merged.xlsx
+├── requirements.txt
+└── README.md
+```
+
+### Two generation modes
+
+**Rule-based (offline, instant)**
+No API key needed. A deterministic engine with full coverage of all tag patterns in the dataset:
+- All IE: sign codes (IE:stop, IE:give_way, IE:maxspeed:*, IE:no_entry, etc.)
+- highway=stop/give_way with direction context
+- maxspeed with km/h and mph support
+- All 12 hazard types (junction, children, bump, roundabout, etc.)
+- Parking type/name/fee/capacity
+- Parking entrances with maxheight
+- city_limit, variable_message, oneway, overtaking, cul-de-sac
+- Description/name/note fallbacks for unclassified signs
+
+**AI-powered (Claude API)**
+Richer, more natural descriptions for complex or ambiguous tag combinations.
+Enter your Anthropic API key (free at console.anthropic.com) in the sidebar to enable.
+
+### Features
+- **Batch generator** — process 5–200 rows at once; download enriched CSV
+- **Single sign inspector** — paste any OSM JSON or search by OSM node ID
+- **Quick examples panel** — 12 pre-loaded test cases with expandable results
+- **Live map** — shows the location of any inspected node
